@@ -1,0 +1,16 @@
+name: probe
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "probe $(date -u)"
+          curl -fsS -H "Title: probe" -d "probe $(date -u +%H:%M:%S) run=$GITHUB_RUN_ID" https://ntfy.sh/xiaohao-probe-1127-q8n2 || true
